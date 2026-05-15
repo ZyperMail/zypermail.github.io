@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zypermail | Secure & Streamlined Email</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<style>
+* {
+box-sizing: border-box;
+margin: 0;
+padding: 0;
+font-family: 'IBM Plex Serif', Georgia, serif;
+}
+body {
+display: flex;
+height: 100vh;
+background-color: #f8f9fa;
+color: #333333;
+overflow: hidden;
+}
+.sidebar {
+width: 260px;
+background-color: #ffffff;
+border-right: 1px solid #e0e0e0;
+display: flex;
+flex-direction: column;
+padding: 24px 16px;
+}
+.brand {
+font-size: 24px;
+font-weight: 700;
+color: #1a73e8;
+margin-bottom: 32px;
+padding-left: 12px;
+letter-spacing: -0.5px;
+}
+.compose-btn {
+background-color: #1a73e8;
+color: #ffffff;
+border: none;
+border-radius: 4px;
+padding: 14px 24px;
+font-size: 14px;
+font-weight: 600;
+cursor: pointer;
+margin-bottom: 24px;
+text-align: center;
+box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+transition: background-color 0.2s;
+}
+.compose-btn:hover {
+background-color: #1557b0;
+}
+.nav-list {
+list-style: none;
+}
+.nav-item {
+display: flex;
+align-items: center;
+padding: 12px;
+border-radius: 4px;
+cursor: pointer;
+margin-bottom: 4px;
+font-size: 14px;
+font-weight: 500;
+color: #5f6368;
+}
+.nav-item.active {
+background-color: #e8f0fe;
+color: #1a73e8;
+font-weight: 600;
+}
+.nav-item:hover:not(.active) {
+background-color: #f1f3f4;
+}
+.main-content {
+flex: 1;
+display: flex;
+flex-direction: column;
+background-color: #ffffff;
+}
+.search-bar {
+height: 64px;
+border-bottom: 1px solid #e0e0e0;
+display: flex;
+align-items: center;
+padding: 0 24px;
+}
+.search-input {
+width: 100%;
+max-width: 720px;
+padding: 12px 20px;
+border: 1px solid #e0e0e0;
+border-radius: 4px;
+background-color: #f1f3f4;
+font-size: 15px;
+outline: none;
+transition: background-color 0.2s, border-color 0.2s;
+}
+.search-input:focus {
+background-color: #ffffff;
+border-color: #1a73e8;
+box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.inbox-container {
+flex: 1;
+overflow-y: auto;
+}
+.email-item {
+display: flex;
+align-items: center;
+padding: 16px 24px;
+border-bottom: 1px solid #f1f3f4;
+cursor: pointer;
+font-size: 14px;
+transition: background-color 0.1s;
+}
+.email-item:hover {
+background-color: #f7f9fa;
+box-shadow: inset 3px 0 0 #1a73e8;
+}
+.email-item.unread {
+font-weight: 700;
+background-color: #fafbfe;
+}
+.sender {
+width: 200px;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+padding-right: 16px;
+}
+.content-preview {
+flex: 1;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+padding-right: 16px;
+}
+.subject {
+color: #202124;
+}
+.email-item.unread .subject {
+color: #000000;
+}
+.snippet {
+color: #5f6368;
+font-weight: 400;
+}
+.date {
+width: 80px;
+text-align: right;
+color: #5f6368;
+font-size: 12px;
+font-weight: 500;
+}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+<div class="brand">Zypermail</div>
+<button class="compose-btn">Compose</button>
+<ul class="nav-list">
+<li class="nav-item active">Inbox</li>
+<li class="nav-item">Starred</li>
+<li class="nav-item">Sent</li>
+<li class="nav-item">Drafts</li>
+<li class="nav-item">Archive</li>
+<li class="nav-item">Trash</li>
+</ul>
+</aside>
+<main class="main-content">
+<header class="search-bar">
+<input type="text" class="search-input" placeholder="Search mail">
+</header>
+<section class="inbox-container">
+<div class="email-item unread">
+<div class="sender">GitHub Pages</div>
+<div class="content-preview">
+<span class="subject">Your site zypermail.github.io is live!</span>
+<span class="snippet"> — Congratulations, your deployment succeeded. View the live deployment details here...</span>
+</div>
+<div class="date">10:28 PM</div>
+</div>
+<div class="email-item unread">
+<div class="sender">Security Alert</div>
+<div class="content-preview">
+<span class="subject">New sign-in detected</span>
+<span class="snippet"> — A new login was noticed on an unrecognized Linux terminal device near your location...</span>
+</div>
+<div class="date">8:14 PM</div>
+</div>
+<div class="email-item">
+<div class="sender">Stack Overflow</div>
+<div class="content-preview">
+<span class="subject">Weekly Top Questions for You</span>
+<span class="snippet"> — Here are the top programming questions selected based on your recent activity history...</span>
+</div>
+<div class="date">May 14</div>
+</div>
+<div class="email-item">
+<div class="sender">The Zypermail Team</div>
+<div class="content-preview">
+<span class="subject">Welcome to your new inbox</span>
+<span class="snippet"> — Discover the advanced organizational tools, custom filters, and shortcuts available...</span>
+</div>
+<div class="date">May 12</div>
+</div>
+</section>
+</main>
+</body>
+</html>
