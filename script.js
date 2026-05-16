@@ -202,4 +202,3 @@ window.addEventListener('DOMContentLoaded', () => {
 initStorage();
 updateUI();
 });
-</script>
