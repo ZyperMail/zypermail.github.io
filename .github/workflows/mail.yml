@@ -16,3 +16,4 @@ jobs:
         run: python mail.py
         env:
           GITHUB_EVENT_PATH: ${{ github.event_path }}
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
