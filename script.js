@@ -100,7 +100,7 @@ viewer.appendChild(item);
 }
 async function dispatchBackendRelay(sender, recipient, subject, body) {
 if (config.authToken === 'YOUR_GITHUB_PERSONAL_ACCESS_TOKEN' || !config.repoOwner) {
-print("Warning: Backend API integration tokens are unconfigured. Skipping remote event dispatch pipeline loop.");
+console.warn("Backend API tokens unconfigured. Skipping remote event dispatch pipeline.");
 return;
 }
 const endpoint = `https://api.github.com/repos/${config.repoOwner}/${config.repoName}/dispatches`;
@@ -139,6 +139,7 @@ updateUI();
 });
 document.getElementById('authForm').addEventListener('submit', (e) => {
 e.preventDefault();
+e.stopPropagation();
 const rawUser = document.getElementById('authUsername').value.trim();
 if (!rawUser) return;
 const accounts = getAccounts();
@@ -154,6 +155,7 @@ updateUI();
 });
 document.getElementById('composeForm').addEventListener('submit', (e) => {
 e.preventDefault();
+e.stopPropagation();
 if (!state.currentUser) return;
 let targetRecipient = document.getElementById('msgRecipient').value.trim();
 if (!targetRecipient.includes('@')) {
@@ -200,3 +202,4 @@ window.addEventListener('DOMContentLoaded', () => {
 initStorage();
 updateUI();
 });
+</script>
