@@ -1,0 +1,18 @@
+name: Zypermail Backend Processing Pipeline
+on:
+  repository_dispatch:
+    types: [mail_webhook]
+jobs:
+  process-vector:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Repository Nodes
+        uses: actions/checkout@v4
+      - name: Initialize Python Execution Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Execute Mail Processing Engine
+        run: python mail.py
+        env:
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
