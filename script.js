@@ -14,9 +14,7 @@ localStorage.setItem('zm_accounts', JSON.stringify([]));
 }
 if (!localStorage.getItem('zm_messages')) {
 const defaultMails = [
-{ id: 1, sender: 'system@zypermail.com', recipient: 'root@zypermail.com', subject: 'Core Framework Notification', body: 'The primary storage subsystem architecture is up and running via local node interfaces.', date: '10:28 AM' },
-{ id: 2, sender: 'git-pages@zypermail.com', recipient: 'root@zypermail.com', subject: 'Deployment Finalized', body: 'Domain routing for zypermail.github.io is verified and operational globally.', date: '08:14 PM' }
-];
+{ id: 1, sender: 'system@zypermail.com', recipient: 'root@zypermail.com', subject: 'Hello', body: 'Welcome', date: '00:00 AM' },];
 localStorage.setItem('zm_messages', JSON.stringify(defaultMails));
 }
 const sessionUser = sessionStorage.getItem('zm_session_user');
