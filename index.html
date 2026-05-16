@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zypermail | Active Mail System</title>
+<title>Zypermail | Active Provider Node</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
@@ -272,7 +272,7 @@ font-size: 15px;
 <div class="brand">Zypermail</div>
 <div class="user-status" id="currentUserDisplay">Not logged in</div>
 <button class="action-btn btn-register" id="btnRegisterNav">Sign In / Register</button>
-<button class="action-btn btn-compose" id="btnComposeNav" style="display:none;">Compose System Mail</button>
+<button class="action-btn btn-compose" id="btnComposeNav" style="display:none;">Compose Mail</button>
 <button class="action-btn btn-logout" id="btnLogoutNav" style="display:none;">Disconnect</button>
 <ul class="nav-list">
 <li class="nav-item active" id="folderInbox">Inbox</li>
@@ -281,16 +281,16 @@ font-size: 15px;
 </aside>
 <main class="main-content">
 <header class="search-bar">
-<input type="text" class="search-input" id="searchInput" placeholder="Filter active messages...">
+<input type="text" class="search-input" id="searchInput" placeholder="Filter messages...">
 </header>
 <section class="inbox-container" id="mailViewer">
 </section>
 </main>
 <div class="modal-overlay" id="authModal">
 <div class="modal-box">
-<button class="close-btn" onclick="toggleModal('authModal', false)">&times;</button>
-<div class="modal-title">Access Engine Room</div>
-<div class="modal-subtitle">Register or switch active system user identities instantly.</div>
+<button class="close-btn" id="closeAuthBtn">&times;</button>
+<div class="modal-title">Access Provider Platform</div>
+<div class="modal-subtitle">Register or open an active user identity node session.</div>
 <form id="authForm">
 <div class="form-group">
 <label class="form-label">System Username</label>
@@ -305,15 +305,14 @@ font-size: 15px;
 </div>
 <div class="modal-overlay" id="composeModal">
 <div class="modal-box">
-<button class="close-btn" onclick="toggleModal('composeModal', false)">&times;</button>
-<div class="modal-title">New Local Message</div>
-<div class="modal-subtitle">Route structural communications through active system loops.</div>
+<button class="close-btn" id="closeComposeBtn">&times;</button>
+<div class="modal-title">New Communication Vector</div>
+<div class="modal-subtitle">Input target nodes. Triggers backend routing loops if external.</div>
 <form id="composeForm">
 <div class="form-group">
 <label class="form-label">Recipient Address</label>
 <div class="input-wrapper">
-<input type="text" id="msgRecipient" class="form-input" placeholder="recipient" required>
-<span class="domain-hint">@zypermail.com</span>
+<input type="text" id="msgRecipient" class="form-input" placeholder="user@domain.com" required>
 </div>
 </div>
 <div class="form-group">
@@ -326,169 +325,10 @@ font-size: 15px;
 <label class="form-label">Message Payload</label>
 <textarea id="msgBody" class="form-textarea" placeholder="Input execution details or standard textual content logs..." required></textarea>
 </div>
-<button type="submit" class="submit-btn">Dispatch Vector Package</button>
+<button type="submit" class="submit-btn">Dispatch Mail Package</button>
 </form>
 </div>
 </div>
-<script>
-let state = {
-currentUser: null,
-currentFolder: 'Inbox',
-searchFilter: ''
-};
-function initStorage() {
-if (!localStorage.getItem('zm_accounts')) {
-localStorage.setItem('zm_accounts', JSON.stringify([]));
-}
-if (!localStorage.getItem('zm_messages')) {
-const defaultMails = [
-{ id: 1, sender: 'system@zypermail.com', recipient: 'root@zypermail.com', subject: 'Core Framework Notification', body: 'The primary storage subsystem architecture is up and running via local node interfaces.', date: '10:28 AM' },
-{ id: 2, sender: 'git-pages@zypermail.com', recipient: 'root@zypermail.com', subject: 'Deployment Finalized', body: 'Domain routing for zypermail.github.io is verified and operational globally.', date: '08:14 PM' }
-];
-localStorage.setItem('zm_messages', JSON.stringify(defaultMails));
-}
-const sessionUser = sessionStorage.getItem('zm_session_user');
-if (sessionUser) {
-state.currentUser = sessionUser;
-}
-}
-function getAccounts() {
-return JSON.parse(localStorage.getItem('zm_accounts'));
-}
-function getMessages() {
-return JSON.parse(localStorage.getItem('zm_messages'));
-}
-function saveMessage(msg) {
-const dynamicMails = getMessages();
-dynamicMails.unshift(msg);
-localStorage.setItem('zm_messages', JSON.stringify(dynamicMails));
-}
-function toggleModal(id, open) {
-const modal = document.getElementById(id);
-if (open) modal.classList.add('active');
-else modal.classList.remove('active');
-}
-function updateUI() {
-const userDisplay = document.getElementById('currentUserDisplay');
-const regBtn = document.getElementById('btnRegisterNav');
-const compBtn = document.getElementById('btnComposeNav');
-const logBtn = document.getElementById('btnLogoutNav');
-if (state.currentUser) {
-userDisplay.textContent = state.currentUser + '@zypermail.com';
-regBtn.style.display = 'none';
-compBtn.style.display = 'block';
-logBtn.style.display = 'block';
-} else {
-userDisplay.textContent = 'Not logged in';
-regBtn.style.display = 'block';
-compBtn.style.display = 'none';
-logBtn.style.display = 'none';
-}
-renderMailbox();
-}
-function renderMailbox() {
-const viewer = document.getElementById('mailViewer');
-viewer.innerHTML = '';
-const allMails = getMessages();
-const targetUser = state.currentUser ? state.currentUser + '@zypermail.com' : 'root@zypermail.com';
-let filtered = allMails.filter(m => {
-if (state.currentFolder === 'Inbox') {
-return m.recipient.toLowerCase() === targetUser.toLowerCase();
-} else {
-return m.sender.toLowerCase() === targetUser.toLowerCase();
-}
-});
-if (state.searchFilter) {
-const term = state.searchFilter.toLowerCase();
-filtered = filtered.filter(m => 
-m.sender.toLowerCase().includes(term) || 
-m.recipient.toLowerCase().includes(term) || 
-m.subject.toLowerCase().includes(term) || 
-m.body.toLowerCase().includes(term)
-);
-}
-if (filtered.length === 0) {
-viewer.innerHTML = '<div class="empty-state">No structural communications record matches the parameters.</div>';
-return;
-}
-filtered.forEach(m => {
-const item = document.createElement('div');
-item.className = 'email-item';
-const displayAddress = state.currentFolder === 'Inbox' ? m.sender : `To: ${m.recipient}`;
-item.innerHTML = `
-<div class="sender">${displayAddress}</div>
-<div class="content-preview">
-<span class="subject">${m.subject}</span>
-<span class="snippet"> — ${m.body}</span>
-</div>
-<div class="date">${m.date}</div>
-`;
-viewer.appendChild(item);
-});
-}
-document.getElementById('btnRegisterNav').addEventListener('click', () => toggleModal('authModal', true));
-document.getElementById('btnComposeNav').addEventListener('click', () => toggleModal('composeModal', true));
-document.getElementById('btnLogoutNav').addEventListener('click', () => {
-state.currentUser = null;
-sessionStorage.removeItem('zm_session_user');
-updateUI();
-});
-document.getElementById('authForm').addEventListener('submit', (e) => {
-e.preventDefault();
-const rawUser = document.getElementById('authUsername').value.trim();
-if (!rawUser) return;
-const accounts = getAccounts();
-if (!accounts.includes(rawUser.toLowerCase())) {
-accounts.push(rawUser.toLowerCase());
-localStorage.setItem('zm_accounts', JSON.stringify(accounts));
-}
-state.currentUser = rawUser.toLowerCase();
-sessionStorage.setItem('zm_session_user', state.currentUser);
-toggleModal('authModal', false);
-document.getElementById('authForm').reset();
-updateUI();
-});
-document.getElementById('composeForm').addEventListener('submit', (e) => {
-e.preventDefault();
-if (!state.currentUser) return;
-const recipientName = document.getElementById('msgRecipient').value.trim().toLowerCase();
-const subjectText = document.getElementById('msgSubject').value.trim();
-const bodyText = document.getElementById('msgBody').value.trim();
-const now = new Date();
-const formattedTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-const newMail = {
-id: Date.now(),
-sender: state.currentUser + '@zypermail.com',
-recipient: recipientName + '@zypermail.com',
-subject: subjectText,
-body: bodyText,
-date: formattedTime
-};
-saveMessage(newMail);
-toggleModal('composeModal', false);
-document.getElementById('composeForm').reset();
-renderMailbox();
-});
-document.getElementById('folderInbox').addEventListener('click', (e) => {
-document.getElementById('folderInbox').classList.add('active');
-document.getElementById('folderSent').classList.remove('active');
-state.currentFolder = 'Inbox';
-renderMailbox();
-});
-document.getElementById('folderSent').addEventListener('click', (e) => {
-document.getElementById('folderSent').classList.add('active');
-document.getElementById('folderInbox').classList.remove('active');
-state.currentFolder = 'Sent';
-renderMailbox();
-});
-document.getElementById('searchInput').addEventListener('input', (e) => {
-state.searchFilter = e.target.value;
-renderMailbox();
-});
-window.addEventListener('DOMContentLoaded', () => {
-initStorage();
-updateUI();
-});
-</script>
+<script src="script.js"></script>
 </body>
 </html>
