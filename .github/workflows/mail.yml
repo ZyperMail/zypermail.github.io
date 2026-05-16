@@ -11,9 +11,12 @@ jobs:
       - name: Initialize Python Execution Environment
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.14'
       - name: Execute Mail Processing Engine
         run: python mail.py
         env:
           GITHUB_EVENT_PATH: ${{ github.event_path }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          ZYPERMAIL_SMTP_HOST: ${{ secrets.ZYPERMAIL_SMTP_HOST }}
+          ZYPERMAIL_SMTP_PORT: ${{ secrets.ZYPERMAIL_SMTP_PORT }}
+          ZYPERMAIL_SMTP_USER: ${{ secrets.ZYPERMAIL_SMTP_USER }}
+          ZYPERMAIL_SMTP_PASSWORD: ${{ secrets.ZYPERMAIL_SMTP_PASSWORD }}
