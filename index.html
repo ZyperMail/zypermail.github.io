@@ -265,15 +265,18 @@ text-align: center;
 color: #5f6368;
 font-size: 15px;
 }
+@media print {
+body { display: none !important; }
+}
 </style>
 </head>
 <body>
 <aside class="sidebar">
 <div class="brand">Zypermail</div>
 <div class="user-status" id="currentUserDisplay">Not logged in</div>
-<button class="action-btn btn-register" id="btnRegisterNav">Sign In / Register</button>
-<button class="action-btn btn-compose" id="btnComposeNav" style="display:none;">Compose Mail</button>
-<button class="action-btn btn-logout" id="btnLogoutNav" style="display:none;">Disconnect</button>
+<button type="button" class="action-btn btn-register" id="btnRegisterNav">Sign In / Register</button>
+<button type="button" class="action-btn btn-compose" id="btnComposeNav" style="display:none;">Compose Mail</button>
+<button type="button" class="action-btn btn-logout" id="btnLogoutNav" style="display:none;">Disconnect</button>
 <ul class="nav-list">
 <li class="nav-item active" id="folderInbox">Inbox</li>
 <li class="nav-item" id="folderSent">Sent</li>
@@ -288,10 +291,10 @@ font-size: 15px;
 </main>
 <div class="modal-overlay" id="authModal">
 <div class="modal-box">
-<button class="close-btn" id="closeAuthBtn">&times;</button>
+<button type="button" class="close-btn" id="closeAuthBtn">&times;</button>
 <div class="modal-title">Access Provider Platform</div>
 <div class="modal-subtitle">Register or open an active user identity node session.</div>
-<form id="authForm">
+<form id="authForm" onsubmit="return false;">
 <div class="form-group">
 <label class="form-label">System Username</label>
 <div class="input-wrapper">
@@ -305,10 +308,10 @@ font-size: 15px;
 </div>
 <div class="modal-overlay" id="composeModal">
 <div class="modal-box">
-<button class="close-btn" id="closeComposeBtn">&times;</button>
+<button type="button" class="close-btn" id="closeComposeBtn">&times;</button>
 <div class="modal-title">New Communication Vector</div>
 <div class="modal-subtitle">Input target nodes. Triggers backend routing loops if external.</div>
-<form id="composeForm">
+<form id="composeForm" onsubmit="return false;">
 <div class="form-group">
 <label class="form-label">Recipient Address</label>
 <div class="input-wrapper">
